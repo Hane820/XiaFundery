@@ -27,23 +27,40 @@ function toggleMenu(toggle: HTMLElement): void {
 function applyFilter(btn: HTMLElement): void {
   const group = btn.closest<HTMLElement>('[data-filter-group]');
   if (!group) return;
-  const filterKey = btn.dataset.filter ?? 'all';
   const scope = btn.dataset.scope ?? 'type';
-  const items = group.querySelectorAll<HTMLElement>('[data-filter-item]');
+
+  group.querySelectorAll<HTMLElement>('[data-filter]').forEach((b) => {
+    if ((b.dataset.scope ?? 'type') !== scope) return;
+    const active = b === btn;
+    b.setAttribute('aria-pressed', String(active));
+    b.classList.toggle('filter-active', active);
+  });
+
+  const filters: Record<string, string> = {};
+  group
+    .querySelectorAll<HTMLElement>('[data-filter][aria-pressed="true"]')
+    .forEach((b) => {
+      filters[b.dataset.scope ?? 'type'] = b.dataset.filter ?? 'all';
+    });
+
+  const items = document.querySelectorAll<HTMLElement>('[data-filter-item]');
   let visible = 0;
   items.forEach((item) => {
-    const match = filterKey === 'all' || item.dataset[scope] === filterKey;
+    let match = true;
+    for (const [key, value] of Object.entries(filters)) {
+      if (value === 'all') continue;
+      if (item.dataset[key] !== value) {
+        match = false;
+        break;
+      }
+    }
     item.classList.toggle('filter-hidden', !match);
     if (match) {
       item.style.opacity = '1';
       visible += 1;
     }
   });
-  group.querySelectorAll<HTMLElement>('[data-filter]').forEach((b) => {
-    const active = b === btn;
-    b.setAttribute('aria-pressed', String(active));
-    b.classList.toggle('filter-active', active);
-  });
+
   const count = group.querySelector<HTMLElement>('[data-filter-count]');
   if (count) count.textContent = String(visible);
 }
