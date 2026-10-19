@@ -1,0 +1,132 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverImage from '../../components/ui/CoverImage.astro';
+import StatusBadge from '../../components/ui/StatusBadge.astro';
+import ProjectMetadata from '../../components/projects/ProjectMetadata.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ResearchCard from '../../components/research/ResearchCard.astro';
+import ContributionChart from '../../components/projects/ContributionChart.astro';
+import {
+  getAllProjects,
+  getAllMembers,
+  getProjectBySlug,
+  getProjectMembers,
+  getMembersBySlugs,
+  getRelatedProjects,
+  getRelatedResearch,
+  getProjectResearch,
+  getContributions,
+  isGithubUrl,
+} from '../../lib/content';
+import { PROJECT_TYPES } from '../../lib/site';
+
+interface Props {
+  project: Awaited<ReturnType<typeof getProjectBySlug>>;
+}
+
+export async function getStaticPaths() {
+  const projects = await getAllProjects();
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+if (!project) throw new Error('Project not found');
+
+const d = project.data;
+const typeInfo = PROJECT_TYPES.find((t) => t.value === d.type);
+const members = await getProjectMembers(d.members);
+const relatedProjects = await getRelatedProjects(d.relatedProjects);
+const researchRefs = await getRelatedResearch(d.relatedResearch);
+const researchByProject = await getProjectResearch(d.slug);
+const allResearch = [
+  ...researchRefs,
+  ...researchByProject.filter(
+    (r) => !researchRefs.some((x) => x.data.slug === r.data.slug),
+  ),
+];
+const researchAuthorMap = new Map<string, { name: string; slug: string }[]>();
+allResearch.forEach((item) => {
+  const authors = getMembersBySlugs(item.data.authors);
+  researchAuthorMap.set(item.data.slug, authors.map((a) => ({ name: a.name, slug: a.slug })));
+});
+const { Content } = await render(project);
+const contributions = await getContributions(d.slug);
+const memberNameMap = Object.fromEntries(getAllMembers().map((m) => [m.slug, m.name]));
+const showContributions = isGithubUrl(d.links.github);
+---
+
+<BaseLayout title={d.name} description={d.summary} ogImage={d.image} dataPage="detail" readingProgress>
+  <article class="shell py-14 md:py-20">
+    <nav class="eyebrow flex items-center gap-2" aria-label="面包屑">
+      <a href="/projects" class="transition-colors hover:text-accent-600">项目</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-mist-500">{d.name}</span>
+    </nav>
+
+    <header class="mt-8 max-w-4xl">
+      <div class="flex flex-wrap items-center gap-2.5">
+        {typeInfo && <span class="tag">{typeInfo.label}</span>}
+        <StatusBadge status={d.status} />
+        {d.demo && <span class="tag tag-demo">示例内容</span>}
+      </div>
+      <h1 class="mt-5 font-display text-4xl font-semibold leading-[1.12] tracking-tight text-ink-950 md:text-6xl">
+        {d.name}
+      </h1>
+      {d.intro && <p class="mt-5 max-w-2xl text-xl leading-relaxed text-ink-600">{d.intro}</p>}
+    </header>
+
+    <div class="mt-10 overflow-hidden rounded-2xl border border-ink-200/70 bg-paper-100">
+      <div class="aspect-[16/9] w-full">
+        <CoverImage src={d.image} alt={`${d.name} 项目封面`} eager />
+      </div>
+    </div>
+
+    {
+      showContributions && (
+        <div class="mt-14">
+          <ContributionChart data={contributions} memberNames={memberNameMap} source={d.links.github} />
+        </div>
+      )
+    }
+
+    <div class="mt-14 grid gap-14 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <div class="min-w-0">
+        <div class="prose-studio measure-wide">
+          <Content />
+        </div>
+      </div>
+      <div class="lg:sticky lg:top-24 lg:h-fit">
+        <ProjectMetadata project={project} members={members.map((m) => ({ name: m.name, slug: m.slug }))} />
+      </div>
+    </div>
+
+    {
+      allResearch.length > 0 && (
+        <section class="mt-20 border-t border-ink-200/70 pt-14">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">相关研究</h2>
+          <p class="mt-2 text-sm text-ink-600">与该项目相关的论文、报告与实验记录。</p>
+          <div class="mt-6">
+            {allResearch.map((item) => (
+              <ResearchCard research={item} authors={researchAuthorMap.get(item.data.slug) ?? []} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      relatedProjects.length > 0 && (
+        <section class="mt-20 border-t border-ink-200/70 pt-14">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">相关项目</h2>
+          <div class="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
+            {relatedProjects.map((p) => <ProjectCard project={p} />)}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

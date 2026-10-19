@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/ui/PageIntro.astro';
+import ResearchCard from '../../components/research/ResearchCard.astro';
+import { getAllResearch, getMembersBySlugs } from '../../lib/content';
+import { RESEARCH_TYPES, RESEARCH_STATUS } from '../../lib/site';
+
+const items = await getAllResearch();
+const resolved = items.map((item) => ({
+  item,
+  authors: getMembersBySlugs(item.data.authors).map((a) => ({
+    name: a.name,
+    slug: a.slug,
+  })),
+}));
+const typeOptions = Object.entries(RESEARCH_TYPES) as [string, { label: string }][];
+const statusOptions = Object.entries(RESEARCH_STATUS) as [string, { label: string }][];
+---
+
+<BaseLayout
+  title="研究"
+  description="匣方艺创（Xia Fundery）的学术与研究内容：论文、技术报告、预印本与研究项目。"
+  dataPage="list"
+>
+  <div class="shell py-16 md:py-24">
+    <PageIntro
+      eyebrow="Research"
+      title="研究与学术"
+      lead="论文、技术报告、预印本与实验记录。所有示例条目都明确标注其状态，不会冒充已发表成果。"
+    />
+
+    <div data-filter-group data-reveal>
+      <div class="mt-10 flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow mr-1">类型</span>
+        <button type="button" data-filter="all" data-scope="type" aria-pressed="true" class="filter-btn filter-active">
+          全部
+        </button>
+        {typeOptions.map(([key, info]) => (
+          <button type="button" data-filter={key} data-scope="type" aria-pressed="false" class="filter-btn">
+            {info.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow mr-1">状态</span>
+        <button type="button" data-filter="all" data-scope="status" aria-pressed="true" class="filter-btn filter-active">
+          全部
+        </button>
+        {statusOptions.map(([key, info]) => (
+          <button type="button" data-filter={key} data-scope="status" aria-pressed="false" class="filter-btn">
+            {info.label}
+          </button>
+        ))}
+      </div>
+
+      <p class="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-mist-500">
+        共 <span data-filter-count>{items.length}</span> 条成果
+      </p>
+    </div>
+
+    <div class="mt-6">
+      {resolved.map(({ item, authors }) => (
+        <ResearchCard research={item} authors={authors} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

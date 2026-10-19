@@ -1,0 +1,50 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import type { Member } from '../../config/members';
+
+interface Props {
+  member: Member;
+  projectCount?: number;
+  researchCount?: number;
+}
+
+const { member, projectCount = 0, researchCount = 0 } = Astro.props;
+const d = member;
+---
+
+<article class="group flex flex-col gap-4 rounded-2xl border border-ink-200/80 bg-paper-50 p-6 transition-colors duration-300 hover:border-accent-500/60" data-reveal>
+  <a href={`/team/${d.slug}`} class="flex items-center gap-4">
+    <img
+      src={d.avatar}
+      alt={`${d.name} 头像`}
+      loading="lazy"
+      decoding="async"
+      class="h-14 w-14 shrink-0 rounded-full border-2 border-ink-200/70 object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+    />
+    <span>
+      <h3 class="font-display text-lg font-semibold leading-tight text-ink-950 transition-colors group-hover:text-accent-600">
+        {d.name}
+      </h3>
+      <p class="mt-0.5 text-sm text-ink-500">{d.role}</p>
+    </span>
+  </a>
+
+  <p class="text-sm leading-relaxed text-ink-600">{d.bio}</p>
+
+  <div class="flex flex-wrap gap-1.5">
+    {d.skills.slice(0, 4).map((s) => <span class="tag">{s}</span>)}
+  </div>
+
+  <div class="mt-auto flex items-center justify-between border-t border-ink-100 pt-4">
+    <span class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-mist-500">
+      {projectCount} 项目 · {researchCount} 研究
+    </span>
+    <a
+      href={`/team/${d.slug}`}
+      class="inline-flex items-center gap-1 font-display text-sm font-semibold text-ink-800 transition-colors hover:text-accent-600"
+    >
+      个人页
+      <ArrowRight size={14} stroke-width={2} />
+    </a>
+  </div>
+</article>

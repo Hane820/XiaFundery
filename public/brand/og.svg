@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0c1320"/>
+<rect x="34" y="34" width="1132" height="562" fill="none" stroke="#faf7f1" stroke-opacity="0.9" stroke-width="2"/>
+<path d="M34 34h30M34 34v30M1166 34h-30M1166 34v30M34 596v-30M34 596h30M1166 596h-30M1166 596v-30" stroke="#faf7f1" stroke-width="2"/>
+<rect x="34" y="34" width="1132" height="562" fill="none" stroke="#faf7f1" stroke-opacity="0.35" stroke-width="1.5"/>
+<rect x="64" y="92" width="34" height="34" rx="8" fill="none" stroke="#faf7f1" stroke-width="3"/>
+<rect x="76" y="104" width="22" height="22" rx="5" fill="none" stroke="#faf7f1" stroke-width="2" opacity="0.6"/>
+<rect x="88" y="116" width="8" height="8" rx="2" fill="#d9923a"/>
+<text x="118" y="122" font-family="'Space Grotesk','Avenir Next','Segoe UI',sans-serif" font-size="34" letter-spacing="4" fill="#faf7f1">XIA&nbsp;FUNDERY</text>
+<text x="64" y="316" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="64" font-weight="600" fill="#faf7f1">匣方艺创</text>
+<text x="66" y="376" font-family="'Space Grotesk','Avenir Next','Segoe UI',sans-serif" font-size="44" fill="#faf7f1">把技术变成作品，让想法拥有形状。</text>
+<text x="64" y="452" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="24" fill="#a5b3cc">软件开发 · 数字创作 · 游戏与交互 · AI 应用 · 技术研究</text>
+<circle cx="1100" cy="480" r="44" fill="#d9923a"/>
+<circle cx="1100" cy="480" r="20" fill="#faf7f1"/>
+</svg>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  as?: 'h1' | 'h2';
+}
+
+const { eyebrow, title, lead, as = 'h1' } = Astro.props;
+---
+
+<div class="border-b border-ink-200/70 pb-10 md:pb-12">
+  {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+  {as === 'h1' ? (
+    <h1 class="max-w-4xl text-4xl font-semibold leading-[1.12] tracking-tight text-ink-950 md:text-6xl">
+      {title}
+    </h1>
+  ) : (
+    <h2 class="max-w-4xl text-4xl font-semibold leading-[1.12] tracking-tight text-ink-950 md:text-6xl">
+      {title}
+    </h2>
+  )}
+  {
+    lead && (
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-ink-600 md:text-xl">{lead}</p>
+    )
+  }
+</div>

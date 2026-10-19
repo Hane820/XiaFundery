@@ -1,0 +1,143 @@
+---
+import { Github, Globe, ExternalLink } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ResearchCard from '../../components/research/ResearchCard.astro';
+import { SORTED_MEMBERS } from '../../config/members';
+import type { Member } from '../../config/members';
+import {
+  getMemberProjects,
+  getMemberResearch,
+} from '../../lib/content';
+
+interface Props {
+  member: Member;
+}
+
+export function getStaticPaths() {
+  return SORTED_MEMBERS.map((member) => ({
+    params: { slug: member.slug },
+    props: { member },
+  }));
+}
+
+const { member } = Astro.props;
+if (!member) throw new Error('Member not found');
+
+const d = member;
+const projects = await getMemberProjects(d.slug);
+const research = await getMemberResearch(d.slug);
+const joinedDate = d.joinedDate ? new Date(d.joinedDate) : undefined;
+
+const links = [
+  d.links?.website && { label: '个人主页', href: d.links.website, icon: Globe },
+  d.links?.github && { label: 'GitHub', href: d.links.github, icon: Github },
+  d.links?.blog && { label: '博客', href: d.links.blog, icon: ExternalLink },
+].filter(Boolean) as { label: string; href: string; icon: typeof Github }[];
+---
+
+<BaseLayout title={d.name} description={`${d.name} — ${d.role}，${d.focus}。`} ogImage={d.avatar} dataPage="detail">
+  <article class="shell py-14 md:py-20">
+    <nav class="eyebrow flex items-center gap-2" aria-label="面包屑">
+      <a href="/team" class="transition-colors hover:text-accent-600">团队</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-mist-500">{d.name}</span>
+    </nav>
+
+    <header class="mt-8 flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
+      <img
+        src={d.avatar}
+        alt={`${d.name} 头像`}
+        class="h-28 w-28 shrink-0 rounded-2xl border-2 border-ink-200/70 object-cover md:h-36 md:w-36"
+      />
+      <div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span class="tag">{d.role}</span>
+          {d.demo && <span class="tag tag-demo">示例内容</span>}
+        </div>
+        <h1 class="mt-4 font-display text-4xl font-semibold tracking-tight text-ink-950 md:text-5xl">
+          {d.name}
+        </h1>
+        <p class="mt-2 text-lg text-ink-600">{d.focus}</p>
+        {joinedDate && (
+          <p class="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-mist-500">
+            加入时间 {joinedDate.getFullYear()}.{String(joinedDate.getMonth() + 1).padStart(2, '0')}
+          </p>
+        )}
+      </div>
+    </header>
+
+    <div class="mt-12 max-w-3xl">
+      <p class="text-lg leading-relaxed text-ink-700">{d.bio}</p>
+      {d.about && (
+        <div class="prose-studio mt-8">
+          {d.about.split(/\n{2,}/).map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      )}
+    </div>
+
+    {
+      d.skills.length > 0 && (
+        <div class="mt-12 border-t border-ink-200/70 pt-10">
+          <h2 class="eyebrow mb-4">技能与方向</h2>
+          <div class="flex flex-wrap gap-2">
+            {d.skills.map((s) => <span class="tag">{s}</span>)}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      links.length > 0 && (
+        <div class="mt-10 border-t border-ink-200/70 pt-10">
+          <h2 class="eyebrow mb-4">公开主页</h2>
+          <ul class="flex flex-wrap gap-6 text-sm">
+            {links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="inline-flex items-center gap-2 text-ink-700 transition-colors hover:text-accent-600"
+                >
+                  <l.icon size={15} stroke-width={1.8} />
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      projects.length > 0 && (
+        <section class="mt-16 border-t border-ink-200/70 pt-12">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">
+            参与项目
+            <span class="ml-2 font-mono text-sm font-normal text-mist-500">{projects.length}</span>
+          </h2>
+          <div class="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
+            {projects.map((p) => <ProjectCard project={p} />)}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      research.length > 0 && (
+        <section class="mt-16 border-t border-ink-200/70 pt-12">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">
+            研究成果
+            <span class="ml-2 font-mono text-sm font-normal text-mist-500">{research.length}</span>
+          </h2>
+          <div class="mt-6">
+            {research.map((item) => (
+              <ResearchCard research={item} authors={[{ name: d.name, slug: d.slug }]} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

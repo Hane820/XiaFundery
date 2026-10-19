@@ -1,0 +1,26 @@
+---
+import { ArrowLeft, FolderOpen } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="页面未找到" description="页面不存在，返回首页继续浏览。" noindex>
+  <div class="shell flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
+    <p class="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-accent-600">Error 404</p>
+    <h1 class="mt-6 font-display text-6xl font-semibold tracking-tight text-ink-950 md:text-8xl">
+      匣中无物
+    </h1>
+    <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-600">
+      这个页面像是从时间轴上被取走了，它或许从未存在，或许正在别处等待被重新拼合。
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="/" class="btn btn-solid">
+        <ArrowLeft size={16} stroke-width={2} />
+        返回首页
+      </a>
+      <a href="/projects" class="btn btn-ghost">
+        <FolderOpen size={16} stroke-width={2} />
+        浏览项目
+      </a>
+    </div>
+  </div>
+</BaseLayout>

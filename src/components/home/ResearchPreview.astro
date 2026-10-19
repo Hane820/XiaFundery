@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ResearchCard from '../research/ResearchCard.astro';
+import { getMembersBySlugs } from '../../lib/content';
+
+interface Props {
+  items: CollectionEntry<'research'>[];
+}
+
+const { items } = Astro.props;
+const resolved = items.map((item) => ({
+  item,
+  authors: getMembersBySlugs(item.data.authors).map((a) => ({
+    name: a.name,
+    slug: a.slug,
+  })),
+}));
+---
+
+<section class="border-t border-ink-200/70 bg-paper-100/50 py-24 md:py-28">
+  <div class="shell">
+    <SectionHeading
+      eyebrow="Research & Notes"
+      title="研究与学术"
+      intro="论文、技术报告与实验记录。所有示例条目均明确标注状态，不作为已发表成果。"
+      href="/research"
+      linkLabel="全部研究成果"
+    />
+    <div>
+      {resolved.map(({ item, authors }) => (
+        <ResearchCard
+          research={item}
+          authors={authors}
+        />
+      ))}
+    </div>
+  </div>
+</section>

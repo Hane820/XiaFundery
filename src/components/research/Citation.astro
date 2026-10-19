@@ -1,0 +1,71 @@
+---
+import { Copy, ExternalLink } from 'lucide-astro';
+import type { ResearchEntry } from '../../lib/content';
+
+interface Props {
+  entry: ResearchEntry;
+  bibtex: string;
+  citation?: string | undefined;
+}
+
+const { entry, bibtex, citation } = Astro.props;
+const d = entry.data;
+
+const linkRows = [
+  d.links.doi && { label: 'DOI', href: d.links.doi },
+  d.links.pdf && { label: 'PDF', href: d.links.pdf },
+  d.links.code && { label: '代码', href: d.links.code },
+  d.links.site && { label: '项目主页', href: d.links.site },
+].filter(Boolean) as { label: string; href: string }[];
+const bibtexId = `bibtex-${d.slug}`;
+---
+
+<aside class="rounded-2xl border border-ink-200/80 bg-paper-100/40 p-6">
+  <h2 class="eyebrow">引用</h2>
+
+  {citation && (
+    <p class="mt-4 text-sm leading-relaxed text-ink-700">{citation}</p>
+  )}
+
+  <div class="mt-5">
+    <div class="flex items-center justify-between">
+      <h3 class="eyebrow">BibTeX</h3>
+      <button
+        type="button"
+        data-copy
+        data-copy-target={`#${bibtexId}`}
+        class="inline-flex items-center gap-1.5 rounded-full border border-ink-300 px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-ink-700 transition-colors hover:border-ink-900 hover:text-ink-950"
+      >
+        <Copy size={13} stroke-width={2} />
+        <span data-copy-label>复制</span>
+      </button>
+    </div>
+    <pre
+      id={bibtexId}
+      class="mt-3 max-h-64 overflow-auto rounded-lg bg-ink-950 p-4 font-mono text-[0.76rem] leading-relaxed text-ink-100"
+    >{bibtex}</pre>
+  </div>
+
+  {
+    linkRows.length > 0 && (
+      <div class="mt-6 border-t border-ink-200/70 pt-5">
+        <h3 class="eyebrow mb-3">资源</h3>
+        <ul class="space-y-2 text-sm">
+          {linkRows.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                class="inline-flex items-center gap-2 text-ink-700 transition-colors hover:text-accent-600"
+              >
+                <ExternalLink size={15} stroke-width={1.8} />
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</aside>

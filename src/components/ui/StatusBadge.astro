@@ -1,0 +1,42 @@
+---
+import { PROJECT_STATUS, RESEARCH_STATUS } from '../../lib/site';
+import type { PROJECT_STATUSES, RESEARCH_STATUSES } from '../../content.config';
+
+interface Props {
+  status: (typeof PROJECT_STATUSES)[number] | (typeof RESEARCH_STATUSES)[number];
+  light?: boolean;
+}
+
+const { status, light = false } = Astro.props;
+
+const tones = {
+  ok: { text: 'text-ok-500', dot: 'bg-ok-500' },
+  accent: { text: 'text-accent-600', dot: 'bg-accent-500' },
+  muted: { text: 'text-mist-500', dot: 'bg-mist-400' },
+} as const;
+
+const statusKey = status as string;
+const projectInfo = PROJECT_STATUS[status as keyof typeof PROJECT_STATUS];
+const researchInfo = RESEARCH_STATUS[status as keyof typeof RESEARCH_STATUS];
+const info = projectInfo ?? researchInfo ?? { label: statusKey, tone: 'muted' as const };
+const toneKey =
+  'tone' in info
+    ? (info as { tone: keyof typeof tones }).tone
+    : status === 'published'
+      ? 'ok'
+      : 'muted';
+const tone = tones[toneKey] ?? tones.muted;
+---
+
+<span
+  class={[
+    'inline-flex items-center gap-1.5 font-mono text-[0.64rem] uppercase tracking-[0.14em]',
+    light ? 'text-paper-100/70' : tone.text,
+  ].join(' ')}
+>
+  <span
+    aria-hidden="true"
+    class={['h-1.5 w-1.5 rounded-full', light ? 'bg-accent-400' : tone.dot].join(' ')}
+  />
+  {info.label}
+</span>

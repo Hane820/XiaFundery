@@ -1,0 +1,98 @@
+---
+import { Menu, X } from 'lucide-astro';
+import { NAV_LINKS } from '../../lib/site';
+import Logo from '../Logo.astro';
+
+const pathname = Astro.url.pathname;
+
+const isActive = (href: string): boolean =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
+---
+
+<header class="sticky top-0 z-40 border-b border-ink-200/70 bg-paper-50/90 backdrop-blur-sm">
+  <div class="shell flex h-16 items-center justify-between gap-6">
+    <a href="/" aria-label="匣方艺创 · 返回首页" class="transition-opacity hover:opacity-80">
+      <Logo />
+    </a>
+
+    <nav aria-label="主导航" class="hidden items-center gap-9 md:flex">
+      {
+        NAV_LINKS.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <a
+              href={link.href}
+              aria-current={active ? 'page' : undefined}
+              class={[
+                'relative py-2 text-sm font-medium transition-colors',
+                active ? 'text-ink-950' : 'text-ink-600 hover:text-ink-950',
+              ].join(' ')}
+            >
+              {link.label}
+              <span
+                aria-hidden="true"
+                class={[
+                  'absolute -bottom-px left-0 h-0.5 w-full origin-left bg-accent-500 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                  active ? 'scale-x-100' : 'scale-x-0',
+                ].join(' ')}
+              />
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <button
+      type="button"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="打开菜单"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-800 transition-colors hover:bg-ink-100 md:hidden"
+    >
+      <Menu class="menu-icon-open" size={22} stroke-width={1.8} />
+      <X class="menu-icon-close hidden" size={22} stroke-width={1.8} />
+    </button>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    data-mobile-nav
+    aria-label="移动端导航"
+    class="hidden border-t border-ink-200/70 bg-paper-50 md:hidden"
+  >
+    <ul class="shell py-2">
+      {
+        NAV_LINKS.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <li>
+              <a
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                class={[
+                  'flex items-baseline justify-between gap-3 border-b border-ink-100 py-3.5 text-base',
+                  active ? 'font-semibold text-ink-950' : 'text-ink-700',
+                ].join(' ')}
+              >
+                <span>{link.label}</span>
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-mist-500">
+                  {link.en}
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .menu-toggle[aria-expanded='true'] .menu-icon-open {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] .menu-icon-close {
+    display: block;
+  }
+</style>

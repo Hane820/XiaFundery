@@ -1,0 +1,33 @@
+{
+  "name": "xia-foundery",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Xia Fundery (匣方艺创) — independent studio for software, games, interactive media, AI applications and research.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "gen:assets": "node scripts/generate-assets.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "fetch:contributions": "node scripts/fetch-contributions.mjs",
+    "build:refresh": "npm run fetch:contributions && npm run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "astro": "^7.4.0",
+    "gsap": "^3.15.0",
+    "lucide-astro": "^0.556.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "typescript": "^5.7.0"
+  }
+}

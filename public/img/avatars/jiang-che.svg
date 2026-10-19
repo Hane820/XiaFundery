@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+<rect width="320" height="320" fill="#17202f"/>
+<circle cx="160" cy="160" r="120" fill="none" stroke="#f4efe6" stroke-width="2"/>
+<circle cx="160" cy="160" r="88" fill="none" stroke="#f4efe6" stroke-opacity="0.45" stroke-width="1.5"/>
+<text x="160" y="192" text-anchor="middle" font-family="'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="110" font-weight="700" fill="#f4efe6">江</text>
+<rect x="70" y="238" width="180" height="2" fill="#f4efe6" opacity="0.6"/>
+</svg>

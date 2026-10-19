@@ -1,0 +1,43 @@
+---
+import type { Member } from '../../config/members';
+import SectionHeading from '../ui/SectionHeading.astro';
+import MemberCard from '../team/MemberCard.astro';
+import { getMemberProjects, getMemberResearch } from '../../lib/content';
+
+interface Props {
+  members: Member[];
+}
+
+const { members } = Astro.props;
+const counts = new Map<string, { projects: number; research: number }>();
+await Promise.all(
+  members.map(async (m) => {
+    const [projects, research] = await Promise.all([
+      getMemberProjects(m.slug),
+      getMemberResearch(m.slug),
+    ]);
+    counts.set(m.slug, { projects: projects.length, research: research.length });
+  }),
+);
+---
+
+<section class="border-t border-ink-200/70 py-24 md:py-28">
+  <div class="shell">
+    <SectionHeading
+      eyebrow="The Team"
+      title="创作团队"
+      intro="工程师、设计师与研究者协作，各有所长，互为补充。"
+      href="/team"
+      linkLabel="查看全部成员"
+    />
+    <div class="grid gap-6 md:grid-cols-3">
+      {members.map((m) => (
+        <MemberCard
+          member={m}
+          projectCount={counts.get(m.slug)?.projects ?? 0}
+          researchCount={counts.get(m.slug)?.research ?? 0}
+        />
+      ))}
+    </div>
+  </div>
+</section>

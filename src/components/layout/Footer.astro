@@ -1,0 +1,102 @@
+---
+import { Mail, Github, ArrowUp } from 'lucide-astro';
+import { NAV_LINKS, PROJECT_TYPES, SITE } from '../../lib/site';
+import Logo from '../Logo.astro';
+
+const year = new Date().getFullYear();
+const externalLinks: { label: string; href: string; icon: typeof Mail }[] = [];
+if (SITE.email) externalLinks.push({ label: '邮箱', href: `mailto:${SITE.email}`, icon: Mail });
+if (SITE.github) externalLinks.push({ label: 'GitHub', href: SITE.github, icon: Github });
+---
+
+<footer class="mt-auto bg-ink-950 text-paper-100">
+  <div class="shell grid gap-12 py-16 md:grid-cols-12 md:gap-8">
+    <div class="md:col-span-5">
+      <Logo light />
+      <p class="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-paper-100/70">
+        {SITE.description}
+      </p>
+      <p class="mt-4 font-display text-lg text-paper-50">{SITE.tagline}</p>
+    </div>
+
+    <div class="md:col-span-3">
+      <h2 class="eyebrow text-paper-100/50">站内导航</h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-paper-100/85 transition-colors hover:text-accent-400"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="md:col-span-2">
+      <h2 class="eyebrow text-paper-100/50">创作方向</h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          PROJECT_TYPES.map((t) => (
+            <li>
+              <a
+                href="/projects"
+                class="text-paper-100/85 transition-colors hover:text-accent-400"
+              >
+                {t.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="md:col-span-2">
+      <h2 class="eyebrow text-paper-100/50">联系</h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          externalLinks.length > 0 ? (
+            externalLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="inline-flex items-center gap-2 text-paper-100/85 transition-colors hover:text-accent-400"
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noreferrer noopener' : undefined}
+                >
+                  <link.icon size={16} stroke-width={1.8} />
+                  {link.label}
+                </a>
+              </li>
+            ))
+          ) : (
+            <li class="text-sm text-paper-100/50">联系方式待补充</li>
+          )
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-paper-100/10">
+    <div class="shell flex flex-col gap-3 py-6 text-sm text-paper-100/45 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {year} {SITE.name} · {SITE.nameEn} · 保留所有权利
+      </p>
+      <p class="font-mono text-[0.7rem] tracking-wide">
+        本站为演示构建，示例项目、成员与研究成果均为虚构数据
+      </p>
+      <a
+        href="#"
+        data-footer-top
+        class="inline-flex items-center gap-1.5 text-paper-100/70 transition-colors hover:text-accent-400"
+      >
+        返回顶部
+        <ArrowUp size={14} stroke-width={2} />
+      </a>
+    </div>
+  </div>
+</footer>

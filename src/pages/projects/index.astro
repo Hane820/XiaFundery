@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/ui/PageIntro.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { getAllProjects } from '../../lib/content';
+import { PROJECT_TYPES, PROJECT_STATUS } from '../../lib/site';
+
+const projects = await getAllProjects();
+const statusOptions = Object.entries(PROJECT_STATUS) as [string, { label: string }][];
+---
+
+<BaseLayout
+  title="项目"
+  description="匣方艺创（Xia Fundery）的全部项目：软件开发、游戏、AI 应用、开源工具与实验性创作。"
+  dataPage="list"
+>
+  <div class="shell py-16 md:py-24">
+    <PageIntro
+      eyebrow="Projects"
+      title="项目"
+      lead="从工程工具到游戏与实验，这里收录工作室的全部作品。筛选器无需 JavaScript 也能正常浏览全部内容。"
+    />
+
+    <div data-filter-group data-reveal>
+      <div class="mt-10 flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow mr-1">类型</span>
+        <button type="button" data-filter="all" data-scope="type" aria-pressed="true" class="filter-btn filter-active">
+          全部
+        </button>
+        {PROJECT_TYPES.map((t) => (
+          <button type="button" data-filter={t.value} data-scope="type" aria-pressed="false" class="filter-btn">
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow mr-1">状态</span>
+        <button type="button" data-filter="all" data-scope="status" aria-pressed="true" class="filter-btn filter-active">
+          全部
+        </button>
+        {statusOptions.map(([key, info]) => (
+          <button type="button" data-filter={key} data-scope="status" aria-pressed="false" class="filter-btn">
+            {info.label}
+          </button>
+        ))}
+      </div>
+
+      <p class="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-mist-500">
+        共 <span data-filter-count>{projects.length}</span> 个项目
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-x-8 gap-y-14 md:grid-cols-2">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </div>
+</BaseLayout>

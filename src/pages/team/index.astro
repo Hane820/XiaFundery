@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/ui/PageIntro.astro';
+import MemberCard from '../../components/team/MemberCard.astro';
+import { getAllMembers, getMemberProjects, getMemberResearch } from '../../lib/content';
+
+const members = getAllMembers();
+const counts = new Map<string, { projects: number; research: number }>();
+await Promise.all(
+  members.map(async (m) => {
+    const [projects, research] = await Promise.all([
+      getMemberProjects(m.slug),
+      getMemberResearch(m.slug),
+    ]);
+    counts.set(m.slug, { projects: projects.length, research: research.length });
+  }),
+);
+---
+
+<BaseLayout
+  title="团队"
+  description="匣方艺创（Xia Fundery）的团队成员：工程师、设计师与研究者。"
+  dataPage="list"
+>
+  <div class="shell py-16 md:py-24">
+    <PageIntro
+      eyebrow="The Team"
+      title="创作团队"
+      lead="工程师、设计师与研究者协作，各有所长，互为补充。每位成员都有独立的介绍页。"
+    />
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {members.map((m) => (
+        <MemberCard
+          member={m}
+          projectCount={counts.get(m.slug)?.projects ?? 0}
+          researchCount={counts.get(m.slug)?.research ?? 0}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

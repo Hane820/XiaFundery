@@ -1,0 +1,106 @@
+---
+import { Github, Globe, Download, ExternalLink } from 'lucide-astro';
+import type { CollectionEntry } from 'astro:content';
+import { PROJECT_TYPES } from '../../lib/site';
+import { formatDate } from '../../lib/content';
+import StatusBadge from '../ui/StatusBadge.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  members: { name: string; slug: string }[];
+}
+
+const { project, members } = Astro.props;
+const d = project.data;
+const typeInfo = PROJECT_TYPES.find((t) => t.value === d.type);
+
+const linkRows = [
+  d.links.github && { label: '源码仓库', href: d.links.github, icon: Github },
+  d.links.demo && { label: '在线演示', href: d.links.demo, icon: ExternalLink },
+  d.links.site && { label: '项目主页', href: d.links.site, icon: Globe },
+  d.links.download && { label: '下载', href: d.links.download, icon: Download },
+  d.links.release && { label: '发布页', href: d.links.release, icon: ExternalLink },
+].filter(Boolean) as { label: string; href: string; icon: typeof Github }[];
+
+const dateRows = [
+  { label: '开始时间', value: formatDate(d.startDate) },
+  { label: '发布时间', value: formatDate(d.publishDate) },
+  { label: '最近更新', value: formatDate(d.updatedDate) },
+].filter((r) => r.value);
+---
+
+<aside class="rounded-2xl border border-ink-200/80 bg-paper-100/40 p-6">
+  <h2 class="eyebrow">项目信息</h2>
+
+  <dl class="mt-5 space-y-4 text-sm">
+    <div class="flex items-center justify-between gap-4">
+      <dt class="text-mist-500">类型</dt>
+      <dd class="font-medium text-ink-800">{typeInfo?.label}</dd>
+    </div>
+    <div class="flex items-center justify-between gap-4">
+      <dt class="text-mist-500">状态</dt>
+      <dd><StatusBadge status={d.status} /></dd>
+    </div>
+    {dateRows.map((r) => (
+      <div class="flex items-center justify-between gap-4">
+        <dt class="text-mist-500">{r.label}</dt>
+        <dd class="font-mono text-[0.82rem] text-ink-800">{r.value}</dd>
+      </div>
+    ))}
+  </dl>
+
+  {
+    d.tech.length > 0 && (
+      <div class="mt-6 border-t border-ink-200/70 pt-5">
+        <h3 class="eyebrow mb-3">技术栈</h3>
+        <div class="flex flex-wrap gap-1.5">
+          {d.tech.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    members.length > 0 && (
+      <div class="mt-6 border-t border-ink-200/70 pt-5">
+        <h3 class="eyebrow mb-3">参与成员</h3>
+        <ul class="space-y-2 text-sm">
+          {members.map((m) => (
+            <li>
+              <a
+                href={`/team/${m.slug}`}
+                class="group flex items-center gap-2 text-ink-700 transition-colors hover:text-accent-600"
+              >
+                <span class="h-1.5 w-1.5 rounded-full bg-accent-500 transition-transform group-hover:scale-125" />
+                {m.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    linkRows.length > 0 && (
+      <div class="mt-6 border-t border-ink-200/70 pt-5">
+        <h3 class="eyebrow mb-3">链接</h3>
+        <ul class="space-y-2 text-sm">
+          {linkRows.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                class="inline-flex items-center gap-2 text-ink-700 transition-colors hover:text-accent-600"
+              >
+                <l.icon size={15} stroke-width={1.8} />
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</aside>

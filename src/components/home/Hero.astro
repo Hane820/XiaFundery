@@ -1,0 +1,106 @@
+---
+interface Props {
+  projectCount: number;
+  researchCount: number;
+  memberCount: number;
+}
+
+const { projectCount, researchCount, memberCount } = Astro.props;
+const stats = [
+  { label: '项目', value: projectCount, en: 'Projects' },
+  { label: '研究', value: researchCount, en: 'Research' },
+  { label: '成员', value: memberCount, en: 'Members' },
+];
+---
+
+<section class="relative overflow-hidden bg-ink-950 text-paper-50" data-hero>
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div data-hero-shape class="absolute -right-48 -top-24 hidden opacity-70 lg:block">
+      <svg width="680" height="680" viewBox="0 0 640 640">
+        <rect x="20" y="20" width="600" height="600" rx="24" fill="none" stroke="#faf7f1" stroke-opacity="0.16" stroke-width="1.5" />
+        <rect x="130" y="130" width="380" height="380" fill="none" stroke="#d9923a" stroke-opacity="0.65" stroke-width="2" />
+        <path d="M320 0v640M0 320h640" stroke="#faf7f1" stroke-opacity="0.05" stroke-width="1" />
+        <circle cx="470" cy="170" r="10" fill="#d9923a" />
+        <circle cx="170" cy="470" r="6" fill="#faf7f1" fill-opacity="0.5" />
+      </svg>
+    </div>
+    <div data-hero-shape class="absolute -bottom-24 left-[38%] hidden md:block">
+      <svg width="200" height="200" viewBox="0 0 180 180">
+        <rect x="10" y="10" width="160" height="160" rx="12" fill="none" stroke="#a5b3cc" stroke-opacity="0.45" stroke-width="2" />
+        <rect x="38" y="38" width="104" height="104" fill="#d9923a" fill-opacity="0.14" stroke="#d9923a" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="shell relative z-10 flex min-h-[78vh] flex-col justify-center gap-12 py-20 lg:flex-row lg:items-center lg:gap-16 lg:py-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow mb-7 text-accent-400" data-hero-el>
+        Xia Fundery · 匣方艺创
+      </p>
+      <h1
+        class="font-display text-4xl font-semibold leading-[1.14] tracking-tight md:text-6xl lg:text-[4.2rem]"
+      >
+        <span class="block" data-hero-el>把技术变成作品，</span>
+        <span class="block text-accent-400" data-hero-el>让想法拥有形状。</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-paper-100/70 md:text-xl" data-hero-el>
+        Where technology becomes craft, and ideas take form. An independent studio building
+        software, games, interactive experiences and AI applications with a research-driven
+        practice.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4" data-hero-el>
+        <a href="/projects" class="btn btn-solid border border-paper-50/0 bg-paper-50 text-ink-950 hover:bg-accent-400">
+          浏览项目
+        </a>
+        <a href="/about" class="btn btn-ghost border-paper-100/40 text-paper-50 hover:border-accent-400 hover:text-accent-300">
+          了解工作室
+        </a>
+      </div>
+    </div>
+
+    <aside class="hidden lg:block lg:w-72" data-hero-el>
+      <div class="border border-paper-100/25 p-8">
+        <div class="flex items-baseline justify-between font-mono text-[0.68rem] uppercase tracking-[0.2em] text-paper-100/55">
+          <span>Studio Index</span>
+          <span>No.01</span>
+        </div>
+        <div class="my-7 h-px bg-paper-100/25" />
+        <dl class="space-y-4 font-mono text-[0.72rem] uppercase tracking-[0.14em]">
+          <div class="flex items-baseline justify-between gap-6">
+            <dt class="text-paper-100/55">项目</dt>
+            <dd class="font-display text-xl font-semibold text-paper-50">{projectCount}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-6">
+            <dt class="text-paper-100/55">研究</dt>
+            <dd class="font-display text-xl font-semibold text-paper-50">{researchCount}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-6">
+            <dt class="text-paper-100/55">成员</dt>
+            <dd class="font-display text-xl font-semibold text-paper-50">{memberCount}</dd>
+          </div>
+        </dl>
+        <div class="my-7 h-px bg-paper-100/25" />
+        <p class="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-paper-100/55">
+          Digital Craft · Research-driven
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="shell relative z-10 border-t border-paper-100/15 py-6" data-hero-el>
+    <dl class="grid grid-cols-3 gap-6">
+      {
+        stats.map((s) => (
+          <div class="flex items-baseline gap-3">
+            <dd class="font-display text-2xl font-semibold text-paper-50 md:text-3xl">{s.value}</dd>
+            <dt class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-paper-100/45">
+              {s.label}
+              <span class="hidden sm:inline"> · {s.en}</span>
+            </dt>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

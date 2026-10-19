@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="py-24 md:py-28">
+  <div class="shell">
+    <SectionHeading
+      eyebrow="Selected Works"
+      title="精选项目"
+      intro="从工程工具到游戏与实验，一组代表工作室方向的作品。"
+      href="/projects"
+      linkLabel="查看全部项目"
+    />
+    <div class="grid gap-x-8 gap-y-12 md:grid-cols-2">
+      {projects.map((p, i) => (
+        <ProjectCard project={p} eager={i < 2} />
+      ))}
+    </div>
+  </div>
+</section>

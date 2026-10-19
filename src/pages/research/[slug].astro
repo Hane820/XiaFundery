@@ -1,0 +1,116 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatusBadge from '../../components/ui/StatusBadge.astro';
+import Citation from '../../components/research/Citation.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import ResearchCard from '../../components/research/ResearchCard.astro';
+import {
+  getAllResearch,
+  getResearchBySlug,
+  getResearchAuthors,
+  getMembersBySlugs,
+  getRelatedProjects,
+  getRelatedResearch,
+  formatDate,
+} from '../../lib/content';
+import { toBibtex } from '../../lib/cite';
+import { RESEARCH_TYPES } from '../../lib/site';
+
+interface Props {
+  entry: Awaited<ReturnType<typeof getResearchBySlug>>;
+}
+
+export async function getStaticPaths() {
+  const items = await getAllResearch();
+  return items.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+if (!entry) throw new Error('Research entry not found');
+
+const d = entry.data;
+const typeInfo = RESEARCH_TYPES[d.type];
+const authors = getResearchAuthors(d.authors);
+const relatedProjects = await getRelatedProjects(d.relatedProjects);
+const relatedResearch = await getRelatedResearch(d.relatedResearch);
+const bibtex = toBibtex(entry, authors.map((a) => ({ name: a.name })));
+const authorNames = authors.map((a) => a.name);
+const { Content } = await render(entry);
+const relatedAuthorMap = new Map<string, { name: string; slug: string }[]>();
+relatedResearch.forEach((item) => {
+  const list = getMembersBySlugs(item.data.authors);
+  relatedAuthorMap.set(item.data.slug, list.map((a) => ({ name: a.name, slug: a.slug })));
+});
+---
+
+<BaseLayout title={d.title} description={d.summary} ogImage="/brand/og.svg" dataPage="detail" readingProgress>
+  <article class="shell py-14 md:py-20">
+    <nav class="eyebrow flex items-center gap-2" aria-label="面包屑">
+      <a href="/research" class="transition-colors hover:text-accent-600">研究</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-mist-500">{d.title}</span>
+    </nav>
+
+    <header class="mt-8 max-w-4xl">
+      <div class="flex flex-wrap items-center gap-2.5">
+        {typeInfo && <span class="tag">{typeInfo.label}</span>}
+        <StatusBadge status={d.status} />
+        {d.demo && <span class="tag tag-demo">示例内容</span>}
+      </div>
+      <h1 class="mt-5 font-display text-3xl font-semibold leading-[1.15] tracking-tight text-ink-950 md:text-5xl">
+        {d.title}
+      </h1>
+      <div class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-600">
+        {authorNames.length > 0 && (
+          <span>{authorNames.join(' · ')}</span>
+        )}
+        {(d.year || d.date) && (
+          <span class="font-mono text-[0.8rem] text-mist-500">
+            {d.year ?? d.date?.getFullYear()}
+            {d.date && d.date.getFullYear() !== d.year && ` · ${formatDate(d.date)}`}
+          </span>
+        )}
+      </div>
+      {d.venue && <p class="mt-2 text-sm text-ink-500">{d.venue}</p>}
+    </header>
+
+    <div class="mt-12 grid gap-14 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <div class="min-w-0">
+        <div class="prose-studio measure-wide">
+          <Content />
+        </div>
+      </div>
+      <div class="lg:sticky lg:top-24 lg:h-fit">
+        <Citation entry={entry} bibtex={bibtex} citation={d.citation} />
+      </div>
+    </div>
+
+    {
+      relatedResearch.length > 0 && (
+        <section class="mt-20 border-t border-ink-200/70 pt-14">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">相关研究成果</h2>
+          <div class="mt-6">
+            {relatedResearch.map((item) => (
+              <ResearchCard research={item} authors={relatedAuthorMap.get(item.data.slug) ?? []} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      relatedProjects.length > 0 && (
+        <section class="mt-20 border-t border-ink-200/70 pt-14">
+          <h2 class="font-display text-2xl font-semibold text-ink-950">相关项目</h2>
+          <div class="mt-8 grid gap-x-8 gap-y-12 md:grid-cols-2">
+            {relatedProjects.map((p) => <ProjectCard project={p} />)}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

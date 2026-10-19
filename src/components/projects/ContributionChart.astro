@@ -1,0 +1,87 @@
+---
+import type { ContributionStats } from '../../lib/content';
+
+interface Props {
+  data?: ContributionStats | undefined;
+  memberNames: Record<string, string>;
+  source?: string | undefined;
+}
+
+const { data, memberNames, source } = Astro.props;
+
+const hasData = Boolean(data && (data.totalCommits > 0 || data.members.length > 0));
+
+const rows = (data && hasData
+  ? [
+      ...data.members.map((m) => ({
+        name: memberNames[m.slug] ?? m.username ?? m.slug,
+        commits: m.commits,
+        isOther: false,
+      })),
+      ...(data.others.commits > 0
+        ? [{ name: '其他', commits: data.others.commits, isOther: true }]
+        : []),
+    ].sort((a, b) => b.commits - a.commits)
+  : []) as { name: string; commits: number; isOther: boolean }[];
+
+const total = data?.totalCommits ?? 0;
+---
+
+<section class="border-t border-ink-200/70 pt-12">
+  <div class="mb-8">
+    <p class="eyebrow mb-3">Contributions</p>
+    <h2 class="font-display text-2xl font-semibold text-ink-950">成员贡献</h2>
+    <p class="mt-2 text-sm text-ink-600">
+      基于 GitHub 提交记录自动统计，按成员 GitHub 账号归属。
+      {source && <span class="font-mono text-[0.72rem] text-mist-500"> · {source}</span>}
+    </p>
+  </div>
+
+  {
+    hasData ? (
+      <div>
+        <ul class="space-y-3">
+          {rows.map((row) => {
+            const pct = total > 0 ? Math.round((row.commits / total) * 100) : 0;
+            return (
+              <li class="grid grid-cols-[6.5rem_1fr_3rem] items-center gap-3 sm:grid-cols-[8rem_1fr_3.5rem]">
+                <span class="truncate text-sm font-medium text-ink-800">{row.name}</span>
+                <div class="h-5 overflow-hidden rounded-sm bg-ink-100" aria-hidden="true">
+                  <div
+                    class={['h-full rounded-sm', row.isOther ? 'bg-mist-400/70' : 'bg-accent-500'].join(' ')}
+                    style={`width:${Math.max(pct, row.commits > 0 ? 2 : 0)}%`}
+                  />
+                </div>
+                <span class="text-right font-mono text-[0.82rem] text-ink-700">{row.commits}</span>
+              </li>
+            );
+          })}
+        </ul>
+        <div class="mt-5 flex items-center justify-between border-t border-ink-100 pt-4 text-xs text-ink-600">
+          <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-mist-500">
+            总计 {total} 次提交
+          </span>
+          {data?.fetchedAt && (
+            <span class="font-mono text-[0.7rem] text-mist-500">
+              更新于 {data.fetchedAt.slice(0, 10)}
+            </span>
+          )}
+        </div>
+        {data?.error && (
+          <p class="mt-3 rounded-md bg-paper-100 px-3 py-2 text-xs text-ink-600">
+            上次抓取失败：{data.error}
+          </p>
+        )}
+      </div>
+    ) : (
+      <div class="rounded-2xl border border-dashed border-ink-200 bg-paper-100/40 p-6">
+        <p class="text-sm leading-relaxed text-ink-600">
+          暂无统计数据。{data?.error ?? ''}
+          {!data?.error && (
+            <>运行 <code class="font-mono text-[0.82rem] text-ink-900">npm run fetch:contributions</code> 抓取 GitHub 提交记录后生成。</>
+          )}
+        </p>
+      </div>
+    )
+  }
+</section>
