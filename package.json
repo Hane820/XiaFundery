@@ -3,6 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.22.0"
+  },
   "description": "Xia Fundery (匣方艺创) — independent studio for software, games, interactive media, AI applications and research.",
   "scripts": {
     "dev": "astro dev",

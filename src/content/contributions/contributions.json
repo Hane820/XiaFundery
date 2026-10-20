@@ -13,6 +13,256 @@
     ],
     "others": {
       "commits": 0
+    },
+    "error": "更新失败：GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试（保留上次数据）"
+  },
+  {
+    "id": "batch-program",
+    "source": "https://github.com/Yunease/batchProgram",
+    "fetchedAt": "2026-10-19T11:44:25.714Z",
+    "totalCommits": 2,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 2
+      }
+    ],
+    "others": {
+      "commits": 0
     }
+  },
+  {
+    "id": "bead-pixel",
+    "source": "https://github.com/Yunease/BeadPixel",
+    "fetchedAt": "2026-10-19T11:44:27.837Z",
+    "totalCommits": 126,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 1
+      }
+    ],
+    "others": {
+      "commits": 125
+    }
+  },
+  {
+    "id": "demo-for-webgame",
+    "source": "https://github.com/Yunease/demo_for_webgame",
+    "fetchedAt": "2026-10-19T11:44:28.671Z",
+    "totalCommits": 4,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 4
+      }
+    ],
+    "others": {
+      "commits": 0
+    }
+  },
+  {
+    "id": "ghostcat",
+    "source": "https://github.com/Yunease/ghostcat",
+    "fetchedAt": "2026-10-19T11:44:29.492Z",
+    "totalCommits": 2,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 2
+      }
+    ],
+    "others": {
+      "commits": 0
+    }
+  },
+  {
+    "id": "godot-",
+    "source": "https://github.com/Yunease/godot-",
+    "fetchedAt": "2026-10-19T11:44:30.291Z",
+    "totalCommits": 2,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 2
+      }
+    ],
+    "others": {
+      "commits": 0
+    }
+  },
+  {
+    "id": "hush-of-pale-blooms",
+    "source": "https://github.com/Yunease/Hush-of-Pale-Blooms",
+    "fetchedAt": "2026-10-19T11:44:31.168Z",
+    "totalCommits": 19,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 19
+      }
+    ],
+    "others": {
+      "commits": 0
+    }
+  },
+  {
+    "id": "mint-word",
+    "source": "https://github.com/Yunease/MintWord",
+    "fetchedAt": "2026-10-19T11:44:32.161Z",
+    "totalCommits": 77,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 41
+      }
+    ],
+    "others": {
+      "commits": 36
+    }
+  },
+  {
+    "id": "moss-vmina",
+    "source": "https://github.com/Yunease/Moss-VMina",
+    "fetchedAt": "2026-10-19T11:44:33.527Z",
+    "totalCommits": 62,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 62
+      }
+    ],
+    "others": {
+      "commits": 0
+    }
+  },
+  {
+    "id": "netease-cloud-music-rank",
+    "source": "https://github.com/Yunease/NeteaseCloudMusic-Rank",
+    "fetchedAt": "2026-10-19T11:44:33.630Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "oc-docgen-skill",
+    "source": "https://github.com/Yunease/OC-DocGen-Skill",
+    "fetchedAt": "2026-10-19T11:44:33.721Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "open-vilstia",
+    "source": "https://github.com/Yunease/OpenVilstia",
+    "fetchedAt": "2026-10-19T11:44:33.824Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "repeat-summer",
+    "source": "https://github.com/Yunease/repeatSummer",
+    "fetchedAt": "2026-10-19T11:44:33.917Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "snake-easyx",
+    "source": "https://github.com/Yunease/snake.easyx",
+    "fetchedAt": "2026-10-19T11:44:34.054Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "test-stardew-valley-mod",
+    "source": "https://github.com/Yunease/test-Stardew-Valley---Stardew-Valley-mod",
+    "fetchedAt": "2026-10-19T11:44:34.152Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "test-terraria-mod",
+    "source": "https://github.com/Yunease/test-terraria-mod",
+    "fetchedAt": "2026-10-19T11:44:34.257Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "time-capsule",
+    "source": "https://github.com/Yunease/timeCapsule",
+    "fetchedAt": "2026-10-19T11:44:34.352Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "tovo-watch",
+    "source": "https://github.com/Yunease/Tovo-Watch",
+    "fetchedAt": "2026-10-19T11:44:34.462Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "wespectator",
+    "source": "https://github.com/Yunease/WeSpectator",
+    "fetchedAt": "2026-10-19T11:44:34.671Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+  },
+  {
+    "id": "xiafundery",
+    "source": "https://github.com/Yunease/XiaFundery",
+    "fetchedAt": "2026-10-19T11:44:34.767Z",
+    "totalCommits": 0,
+    "members": [],
+    "others": {
+      "commits": 0
+    },
+    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
   }
 ]
