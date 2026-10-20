@@ -5,7 +5,7 @@ type: "ai"
 status: "released"
 featured: true
 summary: "以作者小猫「砂铃」为形象的桌面宠物，结合本地大模型提供陪伴式对话与情绪互动。"
-image: "/img/covers/ghostcat.svg"
+image: "/img/covers/ghostcat.jpg"
 tech: ["Rust", "Tauri", "React", "Vite", "Ollama"]
 startDate: "2026-06-07"
 publishDate: "2026-06-07"

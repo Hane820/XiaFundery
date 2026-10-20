@@ -5,7 +5,7 @@ type: "ai"
 status: "released"
 featured: true
 summary: "基于个人语料对 Moss / MiniMax 等大模型进行微调的训练项目，并附带 OpenAI 兼容的 TTS 与推理服务。"
-image: "/img/covers/moss-vmina.svg"
+image: "/img/covers/moss-vmina.jpg"
 tech: ["Python", "PyTorch", "LoRA", "LLM"]
 startDate: "2026-07-03"
 publishDate: "2026-07-03"

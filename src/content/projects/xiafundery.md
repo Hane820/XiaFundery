@@ -5,7 +5,7 @@ type: "software"
 status: "released"
 featured: true
 summary: "独立工作室「匣方艺创 / Xia Fundery」的官方静态站点，展示软件、游戏、AI 应用与研究内容。"
-image: "/img/covers/xiafundery.svg"
+image: "/img/covers/xiafundery.jpg"
 tech: ["Astro", "TypeScript", "Tailwind CSS v4", "GSAP"]
 startDate: "2026-10-19"
 publishDate: "2026-10-19"
