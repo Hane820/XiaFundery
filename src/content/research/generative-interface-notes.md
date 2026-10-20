@@ -18,8 +18,7 @@ citation: 唐栖，陆屿. 生成式界面：约束与自由. 匣方艺创内部
 links:
   pdf: https://example.com/xia-fundery/generative-interface-notes.pdf
 relatedProjects: []
-relatedResearch:
-  - prompt-decomposition-survey
+relatedResearch: []
 ---
 
 ## 背景
