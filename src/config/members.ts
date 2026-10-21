@@ -64,6 +64,21 @@ export const MEMBERS: Member[] = [
       blog: 'https://hxcn.cnies.org'
     },
   },
+  {
+    name: '扁豆面旗子',
+    slug: 'bian-dou-mian-qi-zi',
+    role: '成员 · 文案策划',
+    focus: '内容与叙事',
+    bio: '爱的战士。',
+    avatar: '/img/avatars/bian-dou-mian-qi-zi.svg',
+    skills: [],
+    order: 20,
+    joinedDate: '2026-10-21',
+    demo: false,
+    links: {
+      github: 'https://github.com/Lentilnoodleflags'
+    },
+  },
 ];
 
 /** 按 order 排序后的成员列表 */
