@@ -64,6 +64,24 @@ export const MEMBERS: Member[] = [
       blog: 'https://hxcn.cnies.org'
     },
   },
+  {
+    name: 'Aronnax',
+    slug: 'aronnax',
+    role: '主要成员，独立项目开发者',
+    focus: '全栈开发，AI 应用，工具链',
+    bio: '代码 | 科技 | 动漫 | 影视',
+    about:
+      '独立开发者，热衷于探索 AI Agent、自动化工具与全栈开发。喜欢折腾各种有趣且实用的开源项目。',
+    avatar: '/img/avatars/aronnax.jpg',
+    skills: ['TypeScript', 'Python', 'Go', 'AI'],
+    order: 20,
+    joinedDate: '2026-10-21',
+    demo: false,
+    links: {
+      github: 'https://github.com/aronnaxlin',
+      blog: 'https://aronnax.site',
+    },
+  },
 ];
 
 /** 按 order 排序后的成员列表 */
