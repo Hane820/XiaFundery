@@ -2,19 +2,18 @@
   {
     "id": "vilstia",
     "source": "https://github.com/Yunease/vilstia",
-    "fetchedAt": "2026-10-19T10:15:25.486Z",
-    "totalCommits": 475,
+    "fetchedAt": "2026-10-23T11:57:04.074Z",
+    "totalCommits": 486,
     "members": [
       {
         "slug": "Lumina",
         "username": "Yunease",
-        "commits": 475
+        "commits": 486
       }
     ],
     "others": {
       "commits": 0
-    },
-    "error": "更新失败：GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试（保留上次数据）"
+    }
   },
   {
     "id": "batch-program",
@@ -67,7 +66,7 @@
   {
     "id": "ghostcat",
     "source": "https://github.com/Yunease/ghostcat",
-    "fetchedAt": "2026-10-19T11:44:29.492Z",
+    "fetchedAt": "2026-10-23T11:56:55.083Z",
     "totalCommits": 2,
     "members": [
       {
@@ -115,7 +114,7 @@
   {
     "id": "mint-word",
     "source": "https://github.com/Yunease/MintWord",
-    "fetchedAt": "2026-10-19T11:44:32.161Z",
+    "fetchedAt": "2026-10-23T11:56:57.076Z",
     "totalCommits": 77,
     "members": [
       {
@@ -131,13 +130,13 @@
   {
     "id": "moss-vmina",
     "source": "https://github.com/Yunease/Moss-VMina",
-    "fetchedAt": "2026-10-19T11:44:33.527Z",
-    "totalCommits": 62,
+    "fetchedAt": "2026-10-23T11:56:58.088Z",
+    "totalCommits": 64,
     "members": [
       {
         "slug": "Lumina",
         "username": "Yunease",
-        "commits": 62
+        "commits": 64
       }
     ],
     "others": {
@@ -158,13 +157,18 @@
   {
     "id": "oc-docgen-skill",
     "source": "https://github.com/Yunease/OC-DocGen-Skill",
-    "fetchedAt": "2026-10-19T11:44:33.721Z",
-    "totalCommits": 0,
-    "members": [],
+    "fetchedAt": "2026-10-23T11:56:58.948Z",
+    "totalCommits": 2,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 2
+      }
+    ],
     "others": {
       "commits": 0
-    },
-    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+    }
   },
   {
     "id": "open-vilstia",
@@ -186,7 +190,7 @@
     "others": {
       "commits": 0
     },
-    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+    "error": "更新失败：GitHub API 返回 409（保留上次数据）"
   },
   {
     "id": "snake-easyx",
@@ -224,13 +228,18 @@
   {
     "id": "time-capsule",
     "source": "https://github.com/Yunease/timeCapsule",
-    "fetchedAt": "2026-10-19T11:44:34.352Z",
-    "totalCommits": 0,
-    "members": [],
+    "fetchedAt": "2026-10-23T11:57:00.267Z",
+    "totalCommits": 3,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 3
+      }
+    ],
     "others": {
       "commits": 0
-    },
-    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+    }
   },
   {
     "id": "tovo-watch",
@@ -257,12 +266,17 @@
   {
     "id": "xiafundery",
     "source": "https://github.com/Yunease/XiaFundery",
-    "fetchedAt": "2026-10-19T11:44:34.767Z",
-    "totalCommits": 0,
-    "members": [],
+    "fetchedAt": "2026-10-23T11:57:05.225Z",
+    "totalCommits": 7,
+    "members": [
+      {
+        "slug": "Lumina",
+        "username": "Yunease",
+        "commits": 6
+      }
+    ],
     "others": {
-      "commits": 0
-    },
-    "error": "GitHub 接口限流：请设置 GITHUB_TOKEN 或稍后再试"
+      "commits": 1
+    }
   }
 ]
