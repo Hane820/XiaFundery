@@ -46,6 +46,24 @@ export const MEMBERS: Member[] = [
       blog: 'https://vilstia.org'
     },
   },
+  {
+    name: '萑澈Churnie HXCN',
+    slug: 'excnies',
+    role: '主要成员，独立项目开发者',
+    focus: '全栈开发，Agent开发',
+    bio: '于无声处听惊雷',
+    about:
+      '一个普普通通的独立开发爱好者',
+    avatar: '/img/avatars/excnies.png',
+    skills: ['Python', 'Go', 'TypeScript'],
+    order: 10,
+    joinedDate: '2024-08-19',
+    demo: false,
+    links: {
+      github: 'https://github.com/excniesNIED',
+      blog: 'https://hxcn.cnies.org'
+    },
+  },
 ];
 
 /** 按 order 排序后的成员列表 */
